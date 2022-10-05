@@ -23,7 +23,7 @@ const commentController = {
     },
     // remove comment from pizza
     removeComment({ params }, res) {
-        Comment.findByIdAndDelete({ _id: params.commentId })
+        Comment.findOneAndDelete({ _id: params.commentId })
             .then(deletedComment => {
                 if (!deletedComment) {
                     return res.status(404).json({ message: 'No comment with this id!' });
@@ -39,6 +39,7 @@ const commentController = {
                     res.status(404).json({ message: 'No pizza found with this id!' });
                     return;
                 }
+                res.json(dbPizzaData);
             })
             .catch(err => res.json(err));
     }
